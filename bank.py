@@ -1,8 +1,9 @@
 import sqlite3
-from utils import create_tables, create_account, login_account, deposit, withdraw
+from utils import create_tables, create_account, login_account, deposit, withdraw, transfer
 
 def main():
     user = None
+    name_login = None
     create_tables()
     while True:
         valid_options = [1, 2]
@@ -27,8 +28,6 @@ def main():
                         elif act == options[1]:
                             withdraw(user)
                         elif act == options[2]:
-                            print('Opção de Transferência Bancária selecionada')
-
-
-
+                            transfer(user)
+                            
 main()
