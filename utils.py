@@ -48,30 +48,40 @@ def login_account():
             break
     return {'email':dados[0][2], 'balance':dados[0][4]}
 
-def actions(user):
-    print('[1] - Depósito\n[2] - Saque\n[3] - Transferência Bancária')
-    options = [1, 2, 3]
-    act = 0
-    while act not in options:
-        print('Selecione uma das opções válidas: ')
-        act = int(input())
-        if act == options[0]:
-            print('Opção de depósito selecionada')
-            deposit = float(input('Digite a quantia do depósito:\nR$'))
-            con = sqlite3.connect('bank.db')
-            cur = con.cursor()
-            statement = f"SELECT balance from user WHERE email='{user['email']}'"
-            cur.execute(statement)
-            balance_login = cur.fetchall()
-            print(balance_login)
-            total = balance_login[0][0] + deposit
-            cur.execute("UPDATE user SET balance = ? WHERE email = ?", (total, user['email']))
-            con.commit()
-            con.close()
-            break
-'''def deposit_account(id):
-    deposit = input('Digite a quantia do depósito:\n ')
-    statement = f"SELECT id from user WHERE id='{id}'"
-    cur.execute(statement)'''
+def deposit(user):
+    print('Opção de depósito selecionada')
+    con = sqlite3.connect('bank.db')
+    cur = con.cursor()
+    statement = f"SELECT balance from user WHERE email='{user['email']}'"
+    cur.execute(statement)
+    balance = cur.fetchall()
+    print(f"Seu saldo atual: R${balance[0][0]}")
+    deposit = float(input('Digite a quantia do depósito:\nR$'))
+    total = balance[0][0] + deposit
+    cur.execute("UPDATE user SET balance = ? WHERE email = ?", (total, user['email']))
+    print('Depósito concluído com sucesso')
+    print(f'Seu saldo bancário atual: R${total}')
+    con.commit()
+    con.close()
+    return total
+
+def withdraw(user):
+    print('Opção de saque selecionada')
+    con = sqlite3.connect('bank.db')
+    cur = con.cursor()
+    statement = f"SELECT balance from user WHERE email='{user['email']}'"
+    cur.execute(statement)
+    balance = cur.fetchall()
+    print(f"Seu saldo atual: R${balance[0][0]}")
+    withdraw = float(input('Digite a quantia do saque:\nR$'))
+    total = balance[0][0] - withdraw
+    cur.execute("UPDATE user SET balance = ? WHERE email = ?", (total, user['email']))
+    print('Saque concluído com sucesso')
+    print(f'Seu saldo bancário atual: R${total}')
+    con.commit()
+    con.close()
+
+
+    
 
 
