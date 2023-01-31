@@ -16,18 +16,20 @@ def main():
                 create_account()
             elif resp == 1:
                 user = login_account()
-                print('[1] - Depósito\n[2] - Saque\n[3] - Transferência Bancária')
-                options = [1, 2, 3]
+                options = [1, 2, 3, 4]
                 act = 0
-                while act not in options:
-                        print('Selecione uma das opções válidas: ')
-                        act = int(input())
-                        if act == options[0]:
-                            deposit(user)
-                            break
-                        elif act == options[1]:
-                            withdraw(user)
-                        elif act == options[2]:
-                            transfer(user)
+                while True:
+                    print('[1] - Depósito\n[2] - Saque\n[3] - Transferência Bancária\n[4] - Sair')
+                    print('Selecione uma das opções válidas: ')
+                    act = int(input())
+                    if act == options[0]:
+                        deposit(user)
+                    elif act == options[1]:
+                        withdraw(user)
+                    elif act == options[2]:
+                        transfer(user)
+                    elif act == options[3]:
+                        print('Sessão finalizada')
+                        break
                             
 main()

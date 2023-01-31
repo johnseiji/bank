@@ -55,13 +55,12 @@ def deposit(user):
     statement = f"SELECT balance from user WHERE email='{user['email']}'"
     cur.execute(statement)
     balance = cur.fetchall()
-    print(f"Seu saldo atual: R${balance[0][0]}")
+    print(f"Seu saldo atual: R${balance[0][0]:.2f}")
     deposit = float(input('Digite a quantia do depósito:\nR$'))
     total = balance[0][0] + deposit
     cur.execute("UPDATE user SET balance = ? WHERE email = ?", (total, user['email']))
-    print(f'\033[1;32;40mDepósito de R${deposit} concluído com sucesso\033[m')
-    print(f'Seu saldo bancário atual: R${total}')
-    print('Sessão finalizada')
+    print(f'\033[1;32;40mDepósito de R${deposit:.2f} concluído com sucesso\033[m')
+    print(f'Seu saldo bancário atual: R${total:.2f}')
     con.commit()
     con.close()
     return total
@@ -73,13 +72,12 @@ def withdraw(user):
     statement = f"SELECT balance from user WHERE email='{user['email']}'"
     cur.execute(statement)
     balance = cur.fetchall()
-    print(f"Seu saldo atual: R${balance[0][0]}")
+    print(f"Seu saldo atual: R${balance[0][0]:.2f}")
     withdraw = float(input('Digite a quantia do saque:\nR$'))
     total = balance[0][0] - withdraw
     cur.execute("UPDATE user SET balance = ? WHERE email = ?", (total, user['email']))
-    print(f'\033[1;32;40mSaque de R${withdraw} concluído com sucesso\033[m')
-    print(f'Seu saldo bancário atual: R${total}')
-    print('Sessão finalizada')
+    print(f'\033[1;32;40mSaque de R${withdraw:.2f} concluído com sucesso\033[m')
+    print(f'Seu saldo bancário atual: R${total:.2f}')
     con.commit()
     con.close()
 
@@ -103,14 +101,13 @@ def transfer(user):
         statement = f"SELECT balance from user WHERE email='{user['email']}'"
         cur.execute(statement)
         actual = cur.fetchall()
-        print(f'Seu saldo após a transferência é de R${actual[0][0]}')
+        print(f'Seu saldo após a transferência é de R${actual[0][0]:.2f}')
         statement = f"SELECT balance from user WHERE email='{email_transfer}'"
         cur.execute(statement)
         name_transfer = cur.fetchall()[0][0]
         total_user_trasnfer = name_transfer + value_transfer
         cur.execute("UPDATE user SET balance = ? WHERE email = ?", (total_user_trasnfer, email_transfer))
-        print(f'\033[1;32;40mValor de R${value_transfer} transferido com sucesso para a conta {email_transfer}\033[m')
-        print('Sessão finalizada')
+        print(f'\033[1;32;40mValor de R${value_transfer:.2f} transferido com sucesso para a conta {email_transfer}\033[m')
         con.commit()
         con.close()
         
